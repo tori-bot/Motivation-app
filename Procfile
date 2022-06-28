@@ -1,0 +1,1 @@
+web: gunicorn motivation_project.wsgi
