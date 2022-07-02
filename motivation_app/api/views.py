@@ -2,13 +2,13 @@ from rest_framework import generics
 from rest_framework.response import Response
 from .serializers import *
 from rest_framework.authtoken.models import Token
+from rest_framework.authtoken.views import ObtainAuthToken 
 
 #views
 class StaffSignUpView(generics.GenericAPIView):
     serializer_class=StaffSignUpSerializer
-    
     def post(self, request, *args, **kwargs):
-        serializer= serializer.get_serializer(data=request.data)
+        serializer= self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user=serializer.save()
         return Response({
@@ -19,9 +19,8 @@ class StaffSignUpView(generics.GenericAPIView):
 
 class StudentSignUpView(generics.GenericAPIView):
     serializer_class=StudentSignUpSerializer
-    
     def post(self, request, *args, **kwargs):
-        serializer= serializer.get_serializer(data=request.data)
+        serializer= self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user=serializer.save()
         return Response({
