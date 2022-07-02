@@ -7,4 +7,5 @@ urlpatterns = [
     path('signup/staff/', StaffSignUpView.as_view()),
     path('signup/student/', StudentSignUpView.as_view()),
     path('staff/create_categories/',views.categoryCreation, name="category"),
+    path('staff/post/', views.PostList.as_view(), name='staffpostendpoint'),
 ]
