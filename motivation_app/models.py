@@ -4,6 +4,7 @@ from django.core.validators import FileExtensionValidator
 
 from django.contrib.auth.models import AbstractUser
 from django.forms import ImageField
+from rest_framework.authtoken.models import Token
 
 class User(AbstractUser):
     is_admin = models.BooleanField('Is admin', default=False)
