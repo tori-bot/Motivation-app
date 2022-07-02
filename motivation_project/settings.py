@@ -177,3 +177,4 @@ REST_FRAMEWORK = {
 
 
 AUTH_USER_MODEL = 'motivation_app.User'
+ACCOUNT_EMAIL_UNIQUE=True
