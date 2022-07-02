@@ -61,3 +61,10 @@ class StudentSignUpSerializer(serializers.ModelSerializer):
             Student.objects.create(user=user)
             return user
         
+        
+#User profile serializers
+class ProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Profile
+        fields = ("pk", 'firstname', 'user','lastname','email','profile_pic','bio') 
+        

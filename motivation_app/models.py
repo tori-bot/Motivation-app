@@ -36,8 +36,8 @@ class Staff(models.Model):
     user=models.OneToOneField(User ,related_name='staff',on_delete=models.CASCADE)
     phone_number=models.CharField(max_length=200,null=True)
     
-    def __str__(self):
-        return self.username
+    # def __str__(self):
+    #     return self.user
     
     
 class Student(models.Model):
