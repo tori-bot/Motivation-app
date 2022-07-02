@@ -15,7 +15,7 @@ class User(AbstractUser):
     is_student = models.BooleanField('Is student', default=False)
     
     def __str__(self):
-        return self.user.username
+        return self.username
     
     
 #using signals 
@@ -30,14 +30,14 @@ class Admin(models.Model):
     phone_number=models.CharField(max_length=200,null=True)
     
     def __str__(self):
-        return self.user.username
+        return self.username
     
 class Staff(models.Model):
     user=models.OneToOneField(User ,related_name='staff',on_delete=models.CASCADE)
     phone_number=models.CharField(max_length=200,null=True)
     
     def __str__(self):
-        return self.user.username
+        return self.username
     
     
 class Student(models.Model):
