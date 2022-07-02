@@ -75,6 +75,7 @@ class Profile(models.Model):
     
 
 class Category(models.Model):
+    user = models.ForeignKey(User, related_name="cat", blank=True, null=True, on_delete=models.CASCADE)
     type= models.CharField(max_length=100, null=True)
 
 class Post(models.Model):

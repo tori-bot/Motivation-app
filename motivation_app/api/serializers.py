@@ -68,3 +68,9 @@ class ProfileSerializer(serializers.ModelSerializer):
         model = Profile
         fields = ("pk", 'user','firstname','lastname','email','profile_pic','bio') 
         
+        
+class CategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Category
+        fields = '__all__'
+        
