@@ -10,6 +10,32 @@ class User(AbstractUser):
     is_staff = models.BooleanField('Is staff', default=False)
     is_student = models.BooleanField('Is student', default=False)
     
+    def __str__(self):
+        return self.user.username
+    
+class Admin(models.Model):
+    user=models.OneToOneField(User ,related_name='admin',on_delete=models.CASCADE)
+    phone_number=models.CharField(max_length=200,null=True)
+    
+    def __str__(self):
+        return self.user.username
+    
+class Staff(models.Model):
+    user=models.OneToOneField(User ,related_name='staff',on_delete=models.CASCADE)
+    phone_number=models.CharField(max_length=200,null=True)
+    
+    def __str__(self):
+        return self.user.username
+    
+    
+class Student(models.Model):
+    user=models.OneToOneField(User ,related_name='student', on_delete=models.CASCADE)
+    reg_no=models.CharField(max_length=200, null=True)
+    course=models.CharField(max_length=200,null=True)
+    
+    def __str__(self):
+        return self.user.username
+    
     
 class Profile(models.Model):
     user_id=models.OneToOneField(User,on_delete=models.CASCADE,related_name='profile')

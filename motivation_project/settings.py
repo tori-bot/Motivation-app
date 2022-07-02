@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'motivation_app',
     'cloudinary_storage',
     'cloudinary',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
