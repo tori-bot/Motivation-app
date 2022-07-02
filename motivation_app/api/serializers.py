@@ -6,7 +6,7 @@ from motivation_app.models import *
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model=User
-        fields=['username', 'email', 'is_student']
+        fields=['username', 'email', 'password']
         
 class StaffSignUpSerializer(serializers.ModelSerializer):
     password2 = serializers.CharField(style={'input_type': 'password'}, write_only=True)
@@ -37,17 +37,15 @@ class StaffSignUpSerializer(serializers.ModelSerializer):
         return user
             
 class StudentSignUpSerializer(serializers.ModelSerializer):
-    password2 = serializers.CharField(style={'input_type': 'password'}, write_only=True)    
+    password2 = serializers.CharField(style={'input_type': 'password'}, write_only=True)
     class Meta:
         model=User
-        fields=['username','email','password','password2']
+        fields=['username', 'email','password', 'password2']
         
         extra_kwargs={
             'password':{'write_only':'True'}
         }
-        
-
-        def save(self, **kwargs):
+        def save(self,*args, **kwargs):
             user=User(
                 username=self.validated_data['username'],
                 email=self.validated_data['email'],    

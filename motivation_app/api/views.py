@@ -8,8 +8,11 @@ from rest_framework.authtoken.models import Token
 from rest_framework.authtoken.views import ObtainAuthToken 
 from rest_framework.views import APIView
 from rest_framework import status, permissions
+from drf_yasg.utils import swagger_auto_schema
+from rest_framework.schemas import get_schema_view
 
 #views
+@swagger_auto_schema(request_body=StaffSignUpSerializer)
 class StaffSignUpView(generics.GenericAPIView):
     serializer_class=StaffSignUpSerializer
     def post(self, request, *args, **kwargs):
