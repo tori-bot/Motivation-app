@@ -75,3 +75,9 @@ class CategorySerializer(serializers.ModelSerializer):
         model=Category
         fields = '__all__'
         
+class PostSerializer(serializers.ModelSerializer):
+    user = UserSerializer(read_only=True)
+    class Meta:
+        model=Post
+        fields = '__all__'
+        
