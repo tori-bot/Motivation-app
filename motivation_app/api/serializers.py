@@ -66,5 +66,5 @@ class StudentSignUpSerializer(serializers.ModelSerializer):
 class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
-        fields = ("pk", 'firstname', 'user','lastname','email','profile_pic','bio') 
+        fields = ("pk", 'user','firstname','lastname','email','profile_pic','bio') 
         
