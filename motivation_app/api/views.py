@@ -1,9 +1,13 @@
 from multiprocessing import context
 from rest_framework import generics
 from rest_framework.response import Response
+
+from motivation_app.api.permissions import IsStaffUser,IsStudentUser
 from .serializers import *
 from rest_framework.authtoken.models import Token
 from rest_framework.authtoken.views import ObtainAuthToken 
+from rest_framework.views import APIView
+from rest_framework import status, permissions
 
 #views
 class StaffSignUpView(generics.GenericAPIView):
@@ -34,7 +38,7 @@ class CustomAuthToken(ObtainAuthToken):
     def post(self, request, *args, **kwargs):
         serializer=self.serializer_class(data=request.data, context={'request':request})
         serializer.is_valid(raise_exception=True)
-        user=serializer.validate_data['user']
+        user=serializer.validated_data['user']
         token, created=Token.objects.get_or_create(user=user)
         
         return Response({
@@ -42,3 +46,22 @@ class CustomAuthToken(ObtainAuthToken):
             'user_id':user.pk,
             'is_staff':user.is_staff
         })
+        
+class LogoutView(APIView):
+    def post(self,request, format=None):
+        request.auth.delete()
+        return Response(status=status.HTTP_200_OK)
+    
+class StaffOnlyView(generics.RetrieveAPIView):
+    permission_classes=[permissions.IsAuthenticated&IsStaffUser]
+    serializer_class=UserSerializer
+    
+    def get_object(self):
+        return self.request.user
+    
+class StudentOnlyView(generics.RetrieveAPIView):
+    permission_classes=[permissions.IsAuthenticated&IsStudentUser]
+    serializer_class=UserSerializer
+    
+    def get_object(self):
+        return self.request.user
