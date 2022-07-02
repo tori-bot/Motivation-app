@@ -70,6 +70,7 @@ class ProfileSerializer(serializers.ModelSerializer):
         
         
 class CategorySerializer(serializers.ModelSerializer):
+    user = UserSerializer(read_only=True)
     class Meta:
         model=Category
         fields = '__all__'

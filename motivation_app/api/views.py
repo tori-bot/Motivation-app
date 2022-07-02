@@ -12,7 +12,7 @@ from drf_yasg.utils import swagger_auto_schema
 from rest_framework.schemas import get_schema_view
 
 #views
-@swagger_auto_schema(request_body=StaffSignUpSerializer)
+# @swagger_auto_schema(request_body=StaffSignUpSerializer)
 class StaffSignUpView(generics.GenericAPIView):
     serializer_class=StaffSignUpSerializer
     def post(self, request, *args, **kwargs):
