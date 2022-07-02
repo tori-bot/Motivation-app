@@ -50,12 +50,26 @@ class Student(models.Model):
     
     
 class Profile(models.Model):
-    user_id=models.OneToOneField(User,on_delete=models.CASCADE,related_name='profile')
+    user=models.OneToOneField(User,on_delete=models.CASCADE,related_name='profile')
     firstname=models.CharField(max_length=100,blank=True,null=True)
     lastname=models.CharField(max_length=100,blank=True,null=True)
     email=models.EmailField(max_length=100,blank=True,null=True)
     profile_pic=models.ImageField(upload_to='images_uploaded', null=True)
     bio=models.TextField(blank=True,null=True)
+    
+    #Signals for saving profile when a user is created
+    @receiver(post_save, sender=User)
+    def create_user_profile(sender, instance, created, **kwargs):
+        if created:
+            Profile.objects.create(user=instance)
+
+    @receiver(post_save, sender=User)
+    def save_user_profile(sender, instance, **kwargs):
+        instance.profile.save()
+        
+        
+    def save_profile(self):
+        self.save()
     
     
     
