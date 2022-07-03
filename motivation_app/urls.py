@@ -8,4 +8,5 @@ urlpatterns = [
     path('signup/student/', StudentSignUpView.as_view()),
     path('staff/create_categories/',views.categoryCreation, name="category"),
     path('staff/post/', views.PostList.as_view(), name='staffpostendpoint'),
+    path('staff/post/<int:pk>/', views.SinglePostList.as_view(), name='singlepost'),
 ]
