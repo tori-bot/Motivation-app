@@ -1,5 +1,3 @@
-from dataclasses import fields
-from django.forms import CharField
 from rest_framework import serializers
 from motivation_app.models import *
 
