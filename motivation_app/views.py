@@ -18,8 +18,7 @@ class UpdateProfile(APIView):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
-    
+      
 @api_view(['POST'])
 def categoryCreation(request):
     user = request.user
@@ -32,8 +31,6 @@ def categoryCreation(request):
         data["success"] = "Post category created successfully!"
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
 
 class PostList(APIView):
     def get(self, request, format=None):

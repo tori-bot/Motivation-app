@@ -22,7 +22,7 @@ class StaffSignUpView(generics.GenericAPIView):
         return Response({
             "user":UserSerializer(user, context=self.get_serializer_context()).data,
             "Token":Token.objects.get(user=user).key,
-            "message":"Registration successful"
+            "message":"Staff Registration successful.You are now registered as a staff"
         })
 
 class StudentSignUpView(generics.GenericAPIView):
@@ -34,7 +34,7 @@ class StudentSignUpView(generics.GenericAPIView):
         return Response({
             "user":UserSerializer(user, context=self.get_serializer_context()).data,
             "Token":Token.objects.get(user=user).key,
-            "message":"Registration successful"
+            "message":"Student Registration successful.You are now registered as a student"
         })
         
 class CustomAuthToken(ObtainAuthToken):
