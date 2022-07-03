@@ -6,10 +6,20 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView
 
-# Create your views here.
-def home(request):
-    return render(request, 'index.html')
-
+#Application views.
+class UpdateProfile(APIView):
+    serializer_class = ProfileSerializer
+    lookup_field = 'email'
+    profiles = Profile.objects.all()
+  
+    def put(self, request, *args, **kwargs):
+        serializer = ProfileSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    
 @api_view(['POST'])
 def categoryCreation(request):
     user = request.user
