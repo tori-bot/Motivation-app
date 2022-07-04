@@ -79,8 +79,14 @@ class SinglePostList(APIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
     
 class StudentList(APIView):
+    def get_student(self, pk):
+        try:
+            return Student.objects.get(pk=pk)
+        except Student.DoesNotExist:
+            return Http404
+
     def get(self, request, format=None):
-        #querying from the database(Posts table)
+        #querying from the database(Student table)
         students = Student.objects.all()
         serializers = StudentSerializer(students, many=True)
         #JSON RESPONSE
@@ -95,3 +101,48 @@ class StudentList(APIView):
             serializers.save()
             return Response(serializers.data, status=status.HTTP_201_CREATED)
         return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def put(self, request, pk, format=None):
+        student = self.get_student(pk)
+        serializers = StudentSerializer(student, request.data)
+        if serializers.is_valid():
+            serializers.save()
+            return Response(serializers.data)
+        else:
+            return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+
+    def delete(self, request, pk, format=None):
+        flag_post = self.get_student(pk)
+        flag_post.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+class SingleStudent(APIView):
+    # permission_classes = (IsAdminOrReadOnly,)
+    def get_student(self, pk):
+        try:
+            return Student.objects.get(pk=pk)
+        except Student.DoesNotExist:
+            return Http404
+
+    def get(self, request, pk, format=None):
+        single_post = self.get_student(pk)
+        serializers = StudentSerializer(single_post)
+        return Response(serializers.data)
+    
+    
+    def put(self, request, pk, format=None):
+        single_post = self.get_student(pk)
+        serializers = StudentSerializer(single_post, request.data)
+        if serializers.is_valid():
+            serializers.save()
+            return Response(serializers.data)
+        else:
+            return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    def delete(self, request, pk, format=None):
+        flag_post = self.get_student(pk)
+        flag_post.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+    
+

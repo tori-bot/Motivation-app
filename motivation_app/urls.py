@@ -37,6 +37,9 @@ urlpatterns = [
     path('staff/post/', views.PostList.as_view(), name='staffpostendpoint'),
     path('staff/post/<int:pk>/', views.SinglePostList.as_view(), name='singlepost'),
 
+    path('student/update_profile/', views.UpdateProfile.as_view(), name='student_profile_update'),
+    path('student/', views.StudentList.as_view(), name='studentsendpoint'),
+    path('student/<int:pk>/', views.SingleStudent.as_view(), name='singlestudent'),
     path('student/post/', views.PostList.as_view(), name='studentpostendpoint'),
     path('student/post/<int:pk>/', views.SinglePostList.as_view(), name='singlepost'),
 ]
