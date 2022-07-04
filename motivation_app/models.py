@@ -106,7 +106,7 @@ class Post(models.Model):
     
     
     def __str__(self):
-        return self.content_name
+        return self.description
 
 class Comment(models.Model):
     comment= models.TextField(null=True, blank=True)
@@ -183,6 +183,11 @@ class Subscription(models.Model):
     def __str__(self):
         return self.email
     
+class Addedusers(models.Model):
+    firstname= models.CharField(max_length=50, null=True)
+    lastname= models.CharField(max_length=50, null=True)
+    username= models.CharField(max_length=50, null=True)
+    role = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     
 
 #Models
@@ -194,3 +199,4 @@ class Subscription(models.Model):
 # Categories
 # Dislikes
 # wishlist
+#Added Users

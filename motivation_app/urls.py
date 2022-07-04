@@ -29,6 +29,7 @@ urlpatterns = [
     path('redoc/', schema_view.with_ui('redoc',
          cache_timeout=0), name='schema-redoc'),
 
+    #staff Urls
     path('signup/staff/', StaffSignUpView.as_view()),
     path('signup/student/', StudentSignUpView.as_view()),
     path('api/profile/', views.profile.as_view(),name='profile'),
@@ -37,5 +38,13 @@ urlpatterns = [
     path('staff/add_post/', views.PostList.as_view(), name='staffpostendpoint'),
     path('staff/post/<int:pk>/', views.SinglePostList.as_view(), name='singlepost'),
     path('staff/post/<int:pk>/comment/', views.PostComment.as_view(), name='comment'),
+    path('posts/<int:pk>/like/',views.LikesView.as_view(),name = 'post_likes'),
+    
+    
+    
+    #Admin Urls
+    path('admin/post/<int:pk>/', views.SinglePostList.as_view(), name='singlepost'),
+    path('admin/add_users/', views.AddUser.as_view(), name='singlepost'),
+    
     
 ]

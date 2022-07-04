@@ -5,6 +5,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView
+from django.db.models import Q
 
 # Application views.
 
@@ -108,4 +109,23 @@ class PostComment(APIView):
             serializers.save()
             return Response(serializers.data,status=status.HTTP_201_CREATED)
         return Response(serializers.errors,status=status.HTTP_400_BAD_REQUEST)
+
+class LikesView(APIView):
+    def post(self,request,pk):
+        user_id = User.objects.get(id=2)
+        posts = Post.objects.filter(pk=pk)
+        check = Likes.objects.filter(Q(user_id=2) & Q(post_id = posts.last() ))
+        if(check.exists()):
+            return Response({
+                "status": status.HTTP_400_BAD_REQUEST,
+                "message":"You only like once"
+                })
+        new_like = Likes.objects.create(user_id=user_id, post_id=posts.last())
+        new_like.save()
+        serializer = LikesSerializer(new_like)
+        return Response(serializer.data,status=status.HTTP_201_CREATED)
+
+#Admin
+class AddUser(APIView):
+    pass
 
