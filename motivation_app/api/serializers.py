@@ -83,4 +83,9 @@ class PostSerializer(serializers.ModelSerializer):
     class Meta:
         model=Post
         fields = '__all__'
-        
+
+class StudentSerializer(serializers.ModelSerializer):
+    user = UserSerializer(read_only=True)
+    class Meta:
+        model=Student
+        fields = '__all__'

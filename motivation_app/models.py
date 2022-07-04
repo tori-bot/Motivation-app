@@ -190,3 +190,4 @@ class Subscription(models.Model):
 # Categories
 # Dislikes
 # wishlist
+# subscriptions
