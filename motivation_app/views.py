@@ -87,3 +87,25 @@ class SinglePostList(APIView):
         flag_post = self.get_single_post(pk)
         flag_post.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+# @api_view(['POST']) 
+class PostComment(APIView):
+    def get_single_post(self, pk):
+        try:
+            return Post.objects.get(pk=pk)
+        except Post.DoesNotExist:
+            return Http404
+
+    def get(self, request, pk, format=None):
+        single_post = self.get_single_post(pk)
+        serializers = PostSerializer(single_post)
+        return Response(serializers.data)
+    
+    
+    def post(self, request, pk,format=None):
+        serializers=CommentSerializer(data=request.data)
+        if serializers.is_valid():
+            serializers.save()
+            return Response(serializers.data,status=status.HTTP_201_CREATED)
+        return Response(serializers.errors,status=status.HTTP_400_BAD_REQUEST)
+
