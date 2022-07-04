@@ -78,3 +78,4 @@ class SinglePostList(APIView):
         flag_post.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
     
+

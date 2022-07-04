@@ -44,7 +44,11 @@ class Student(models.Model):
     user=models.OneToOneField(User ,related_name='student', on_delete=models.CASCADE)
     reg_no=models.CharField(max_length=200, null=True)
     course=models.CharField(max_length=200,null=True)
-    
+    posts=models.ForeignKey('Post', null=True,on_delete=models.CASCADE)
+    comments=models.ForeignKey('Comment', null=True,on_delete=models.CASCADE)
+    categories=models.ForeignKey('Category', null=True,on_delete=models.CASCADE)
+    wishlist=models.ForeignKey('Wishlist',null=True,on_delete=models.CASCADE)
+
     def __str__(self):
         return self.user.username
     
