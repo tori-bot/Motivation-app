@@ -78,4 +78,20 @@ class SinglePostList(APIView):
         flag_post.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
     
-
+class StudentList(APIView):
+    def get(self, request, format=None):
+        #querying from the database(Posts table)
+        students = Student.objects.all()
+        serializers = StudentSerializer(students, many=True)
+        #JSON RESPONSE
+        return Response(serializers.data)
+    
+    
+    # permission_classes = (IsAdminOrReadOnly,)
+    
+    def post(self, request, format=None):
+        serializers = StudentSerializer(data=request.data)
+        if serializers.is_valid():
+            serializers.save()
+            return Response(serializers.data, status=status.HTTP_201_CREATED)
+        return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
