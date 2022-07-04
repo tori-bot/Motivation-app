@@ -117,3 +117,7 @@ class CommentSerializer(serializers.ModelSerializer):
         model=Comment
         fields = '__all__'
     
+class LikesSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Likes
+        fields = '__all__'
