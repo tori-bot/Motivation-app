@@ -29,10 +29,31 @@ urlpatterns = [
     path('redoc/', schema_view.with_ui('redoc',
          cache_timeout=0), name='schema-redoc'),
 
+    #staff Urls
     path('signup/staff/', StaffSignUpView.as_view()),
     path('signup/student/', StudentSignUpView.as_view()),
-    path('staff/update_profile/', views.UpdateProfile.as_view(), name='profile_update'),
+    path('api/profile/', views.profile.as_view(),name='profile'),
+    path('api/update_profile/', views.UpdateProfile.as_view(), name='profile_update'),
     path('staff/create_categories/',views.categoryCreation, name="category"),
-    path('staff/post/', views.PostList.as_view(), name='staffpostendpoint'),
+    path('staff/add_post/', views.PostList.as_view(), name='staffpostendpoint'),
     path('staff/post/<int:pk>/', views.SinglePostList.as_view(), name='singlepost'),
+    path('staff/post/<int:pk>/comment/', views.PostComment.as_view(), name='comment'),
+    path('posts/<int:pk>/like/',views.LikesView.as_view(),name = 'post_likes'),
+    #student urls
+    path('student/update_profile/', views.UpdateProfile.as_view(), name='student_profile_update'),
+    path('student/', views.StudentList.as_view(), name='studentslistendpoint'),
+    path('student/<int:pk>/', views.SingleStudent.as_view(), name='singlestudent'),
+    path('student/post/', views.PostList.as_view(), name='studentpostendpoint'),
+    path('student/post/<int:pk>/', views.SinglePostList.as_view(), name='singlepost'),
+    path('student/wishlist/', views.Wishlist.as_view(), name='studentwishlistendpoint'),
+    path('staff/post/<int:pk>/like/',views.LikesView.as_view(),name = 'post_likes'),
+    
+    
+    
+    #Admin Urls
+    path('admin/post/<int:pk>/', views.SinglePostList.as_view(), name='singlepost'),
+    path('admin/add_users/', views.AddUser.as_view(), name='singlepost'),
+    path('admin/deactivate/', views.DeactivateUser.as_view(), name='deactivate'),
+    
+    
 ]
