@@ -158,7 +158,7 @@ class SingleStudent(APIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
     
     def post(self, request, pk,format=None):
-        serializers=CommentSerializer(data=request.data)
+        serializers=StudentSerializer(data=request.data)
         if serializers.is_valid():
             serializers.save()
             return Response(serializers.data,status=status.HTTP_201_CREATED)
@@ -190,3 +190,12 @@ class Wishlist(APIView):
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
+
+    
+
+    def post(self, request, pk,format=None):
+        serializers=WishlistSerializer(data=request.data)
+        if serializers.is_valid():
+            serializers.save()
+            return Response(serializers.data,status=status.HTTP_201_CREATED)
+        return Response(serializers.errors,status=status.HTTP_400_BAD_REQUEST)

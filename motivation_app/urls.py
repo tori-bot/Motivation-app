@@ -41,11 +41,11 @@ urlpatterns = [
     path('posts/<int:pk>/like/',views.LikesView.as_view(),name = 'post_likes'),
     #student urls
     path('student/update_profile/', views.UpdateProfile.as_view(), name='student_profile_update'),
-    path('student/', views.StudentList.as_view(), name='studentsendpoint'),
+    path('student/', views.StudentList.as_view(), name='studentslistendpoint'),
     path('student/<int:pk>/', views.SingleStudent.as_view(), name='singlestudent'),
     path('student/post/', views.PostList.as_view(), name='studentpostendpoint'),
     path('student/post/<int:pk>/', views.SinglePostList.as_view(), name='singlepost'),
-    path('student/post/', views.PostList.as_view(), name='studentpostendpoint'),
+    path('student/wishlist/', views.Wishlist.as_view(), name='studentwishlistendpoint'),
     #Admin Urls
     path('admin/post/<int:pk>/', views.SinglePostList.as_view(), name='singlepost'),
     path('admin/add_users/', views.AddUser.as_view(), name='singlepost'),
