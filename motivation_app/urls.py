@@ -46,7 +46,10 @@ urlpatterns = [
     path('student/post/', views.PostList.as_view(), name='studentpostendpoint'),
     path('student/post/<int:pk>/', views.SinglePostList.as_view(), name='singlepost'),
     path('student/wishlist/', views.Wishlist.as_view(), name='studentwishlistendpoint'),
-    path('staff/post/<int:pk>/like/',views.LikesView.as_view(),name = 'post_likes'),
+    path('student/post/<int:pk>/like/',views.LikesView.as_view(),name = 'post_likes'),
+    path('student/post/<int:pk>/comment/', views.PostComment.as_view(), name='comment'),
+    
+
     
     
     
