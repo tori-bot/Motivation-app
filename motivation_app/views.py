@@ -1,3 +1,4 @@
+from cgitb import lookup
 from django.http import Http404
 from django.shortcuts import render
 from .api.serializers import *
@@ -6,6 +7,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView
 from django.db.models import Q
+from django.shortcuts import get_object_or_404
 
 # Application views.
 
@@ -89,7 +91,9 @@ class SinglePostList(APIView):
         flag_post.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
-# @api_view(['POST']) 
+# @api_view(['POST'])
+
+
 class PostComment(APIView):
     def get_single_post(self, pk):
         try:
@@ -101,7 +105,14 @@ class PostComment(APIView):
         single_post = self.get_single_post(pk)
         serializers = PostSerializer(single_post)
         return Response(serializers.data)
-    
+
+        
+    def post(self, request, pk, format=None):
+        serializers = CommentSerializer(data=request.data)
+        if serializers.is_valid():
+            serializers.save()
+            return Response(serializers.data, status=status.HTTP_201_CREATED)
+        return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
     
 class StudentList(APIView):
     def get_student(self, pk):
@@ -161,27 +172,66 @@ class SingleStudent(APIView):
         serializers=StudentSerializer(data=request.data)
         if serializers.is_valid():
             serializers.save()
-            return Response(serializers.data,status=status.HTTP_201_CREATED)
-        return Response(serializers.errors,status=status.HTTP_400_BAD_REQUEST)
+            return Response(serializers.data, status=status.HTTP_201_CREATED)
+        return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    
+
+    # def get(self, request, pk, format=None):
+    #     pass
+
 
 class LikesView(APIView):
-    def post(self,request,pk):
-        user_id = User.objects.get(id=2)
-        posts = Post.objects.filter(pk=pk)
-        check = Likes.objects.filter(Q(user_id=2) & Q(post_id = posts.last() ))
+    def post(self, request, pk):
+        user=request.user
+        # current_user = request.user
+        user_id = User.objects.get(id=user.id)
+        # user_id=User.objects.get(id=user.id)
+        # user_id = User.objects.get(id=user)
+        try:
+            post_id = Post.objects.get(pk=pk)
+        except Post.DoesNotExist:
+            post_id = None
+      # get_object_or_404(Likes, pk=post_id)
+        check = Likes.objects.filter(Q(user_id=user_id) & Q(post_id=post_id))
+       # check=Likes.object.get_object_or_404(Likes, pk=post_id)
         if(check.exists()):
             return Response({
                 "status": status.HTTP_400_BAD_REQUEST,
-                "message":"You only like once"
-                })
-        new_like = Likes.objects.create(user_id=user_id, post_id=posts.last())
+                "message": "You only like once"
+            })
+        new_like = Likes.objects.create(user_id=user_id, post_id=post_id)
         new_like.save()
         serializer = LikesSerializer(new_like)
-        return Response(serializer.data,status=status.HTTP_201_CREATED)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
-#Admin
-class AddUser(APIView):
+
+# class DeactivateUser(APIView):
+#     def get(self, request, *args, **kwargs):
+#         user=self.request.user
+#         user.delete()
+
+#         return Response({"result":"user delete"})
+
+
+class deactivate_user(APIView):
     pass
+#     def put(self, request, *args, **kwargs):
+#         serializers = UserSerializer(data=request.data)
+#         if serializers.is_active False:
+#             serializers.save()
+#             return Response(serializers.data)
+#         else:
+#             return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
+#         user = request.user
+#         data = {}
+#         user.is_active = False
+#         user.save()
+#         data["success"] = "User successfully deactivated!"
+#         # return redirect('index')
+
+   
+# Admin
 
 class Wishlist(APIView):
     queryset = Wishlist.objects.all()
@@ -199,3 +249,5 @@ class Wishlist(APIView):
             serializers.save()
             return Response(serializers.data,status=status.HTTP_201_CREATED)
         return Response(serializers.errors,status=status.HTTP_400_BAD_REQUEST)
+class AddUser(APIView):
+    pass
