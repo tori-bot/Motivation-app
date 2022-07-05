@@ -103,7 +103,6 @@ class PostComment(APIView):
         return Response(serializers.data)
     
     
-<<<<<<< HEAD
 class StudentList(APIView):
     def get_student(self, pk):
         try:
@@ -171,7 +170,6 @@ class SingleStudent(APIView):
         flag_post.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
     
-=======
     def post(self, request, pk,format=None):
         serializers=CommentSerializer(data=request.data)
         if serializers.is_valid():
@@ -197,5 +195,4 @@ class LikesView(APIView):
 #Admin
 class AddUser(APIView):
     pass
->>>>>>> 85ad813e1889d9a275a9be6b63552b0e25c276e8
 
