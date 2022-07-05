@@ -38,13 +38,14 @@ urlpatterns = [
     path('staff/add_post/', views.PostList.as_view(), name='staffpostendpoint'),
     path('staff/post/<int:pk>/', views.SinglePostList.as_view(), name='singlepost'),
     path('staff/post/<int:pk>/comment/', views.PostComment.as_view(), name='comment'),
-    path('posts/<int:pk>/like/',views.LikesView.as_view(),name = 'post_likes'),
+    path('staff/post/<int:pk>/like/',views.LikesView.as_view(),name = 'post_likes'),
     
     
     
     #Admin Urls
     path('admin/post/<int:pk>/', views.SinglePostList.as_view(), name='singlepost'),
     path('admin/add_users/', views.AddUser.as_view(), name='singlepost'),
+    path('admin/deactivate/', views.deactivate_user.as_view(), name='deactivate'),
     
     
 ]
