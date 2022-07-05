@@ -245,7 +245,10 @@ class Wishlist(APIView):
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
 
-    
+    def get(self, request, pk, format=None):
+        single_post = self.get_student(pk)
+        serializers = WishlistSerializer(single_post)
+        return Response(serializers.data)
 
     def post(self, request, pk,format=None):
         serializers=WishlistSerializer(data=request.data)
