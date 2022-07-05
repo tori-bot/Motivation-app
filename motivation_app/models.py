@@ -18,7 +18,7 @@ class User(AbstractUser):
         return self.username
     
     
-#using signals 
+#using signals to create authentication token
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
 def create_auth_token(sender, instance=None, created=False, **kwargs):
     if created:
@@ -27,17 +27,18 @@ def create_auth_token(sender, instance=None, created=False, **kwargs):
 
 class Admin(models.Model):
     user=models.OneToOneField(User ,related_name='admin',on_delete=models.CASCADE)
+    username=models.CharField(max_length=100, null=True)
     phone_number=models.CharField(max_length=200,null=True)
     
     def __str__(self):
-        return self.username
+        return self.user.username
     
 class Staff(models.Model):
     user=models.OneToOneField(User ,related_name='staff',on_delete=models.CASCADE)
     phone_number=models.CharField(max_length=200,null=True)
     
-    # def __str__(self):
-    #     return self.user
+    def __str__(self):
+        return self.user.username
     
     
 class Student(models.Model):
@@ -70,6 +71,9 @@ class Profile(models.Model):
     email=models.EmailField(max_length=100,blank=True,null=True)
     profile_pic=models.ImageField(upload_to='images_uploaded', null=True)
     bio=models.TextField(blank=True,null=True)
+    
+    def __str__(self):
+        return self.user.firstname
     
     #Signals for saving profile when a user is created
     @receiver(post_save, sender=User)
@@ -119,7 +123,7 @@ class Post(models.Model):
     
     
     def __str__(self):
-        return self.content_name
+        return self.description
 
 class Comment(models.Model):
     comment= models.TextField(null=True, blank=True)
@@ -196,6 +200,11 @@ class Subscription(models.Model):
     def __str__(self):
         return self.email
     
+class Addedusers(models.Model):
+    firstname= models.CharField(max_length=50, null=True)
+    lastname= models.CharField(max_length=50, null=True)
+    username= models.CharField(max_length=50, null=True)
+    role = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     
 
 #Models
@@ -207,4 +216,4 @@ class Subscription(models.Model):
 # Categories
 # Dislikes
 # wishlist
-# subscriptions
+#Added Users

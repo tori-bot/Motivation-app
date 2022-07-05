@@ -12,7 +12,20 @@ from drf_yasg.utils import swagger_auto_schema
 from rest_framework.schemas import get_schema_view
 
 #views
-# @swagger_auto_schema(request_body=StaffSignUpSerializer)
+
+
+class AdminSignUpView(generics.GenericAPIView):
+    serializer_class=AdminSignUpSerializer
+    def post(self, request, *args, **kwargs):
+        serializer= self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user=serializer.save()
+        return Response({
+            "user":UserSerializer(user, context=self.get_serializer_context()).data,
+            "Token":Token.objects.get(user=user).key,
+            "message":"Admin Registration successful.You are now registered as an admin"
+        })
+
 class StaffSignUpView(generics.GenericAPIView):
     serializer_class=StaffSignUpSerializer
     def post(self, request, *args, **kwargs):
