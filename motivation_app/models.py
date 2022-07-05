@@ -42,10 +42,24 @@ class Staff(models.Model):
     
     
 class Student(models.Model):
-    user=models.OneToOneField(User ,related_name='student', on_delete=models.CASCADE)
+    user=models.OneToOneField(User ,related_name='student',null=True, on_delete=models.CASCADE)
     reg_no=models.CharField(max_length=200, null=True)
     course=models.CharField(max_length=200,null=True)
-    
+    posts=models.ForeignKey('Post', null=True,blank=True ,on_delete=models.CASCADE)
+    comments=models.ForeignKey('Comment', null=True,blank=True ,on_delete=models.CASCADE)
+    categories=models.ForeignKey('Category', null=True,blank=True ,on_delete=models.CASCADE)
+    wishlist=models.ForeignKey('Wishlist',null=True,blank=True ,on_delete=models.CASCADE)
+
+    def save_student(self):
+        self.save()
+
+    def delete_student(self):
+        self.delete()
+        
+        
+    def update_student(self):
+        self.update()
+
     def __str__(self):
         return self.user.username
     
@@ -82,16 +96,19 @@ class Category(models.Model):
     user = models.ForeignKey(User, related_name="cat", blank=True, null=True, on_delete=models.CASCADE)
     type= models.CharField(max_length=100, null=True)
 
+    def __str__(self):
+        return self.type
+
 class Post(models.Model):
     content_name=models.CharField(max_length=100,null=True,blank=True)
-    content_image=models.ImageField(null=True,upload_to='images_uploaded')
-    video = models.FileField(null=True,upload_to='videos_uploaded',
+    content_image=models.ImageField(null=True,blank=True,upload_to='images_uploaded')
+    video = models.FileField(null=True,blank=True,upload_to='videos_uploaded',
     validators=[FileExtensionValidator(allowed_extensions=['MOV','avi','mp4','webm','mkv'])])
     user = models.ForeignKey(User, on_delete=models.CASCADE,null=True,blank=True)
-    description=models.TextField(null=False)
+    description=models.TextField()
     date_posted=models.DateTimeField(auto_now_add=True)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True)
-    comments = models.ManyToManyField('Comment', null=True)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True,blank=True)
+    comments = models.ManyToManyField('Comment', null=True,blank=True)
     
     
     
