@@ -58,8 +58,8 @@ class Profile(models.Model):
     profile_pic=models.ImageField(upload_to='images_uploaded', null=True)
     bio=models.TextField(blank=True,null=True)
     
-    def __str__(self):
-        return self.user.firstname
+    # def __str__(self):
+    #     return self.user.firstname
     
     #Signals for saving profile when a user is created
     @receiver(post_save, sender=User)
@@ -92,6 +92,7 @@ class Post(models.Model):
     date_posted=models.DateTimeField(auto_now_add=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True)
     comments = models.ManyToManyField('Comment', null=True)
+    
     
     
     def save_post(self):
@@ -131,7 +132,7 @@ class Comment(models.Model):
 class Likes(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     user_id= models.ForeignKey(User,on_delete=models.CASCADE)
-    post_id= models.ForeignKey(Post,on_delete=models.CASCADE)
+    post_id= models.ForeignKey(Post,on_delete=models.CASCADE, null=True)
     
     
     def save_likes(self):
@@ -183,11 +184,11 @@ class Subscription(models.Model):
     def __str__(self):
         return self.email
     
-class Addedusers(models.Model):
-    firstname= models.CharField(max_length=50, null=True)
-    lastname= models.CharField(max_length=50, null=True)
-    username= models.CharField(max_length=50, null=True)
-    role = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+# class Addedusers(models.Model):
+#     firstname= models.CharField(max_length=50, null=True)
+#     lastname= models.CharField(max_length=50, null=True)
+#     username= models.CharField(max_length=50, null=True)
+#     role = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     
 
 #Models
