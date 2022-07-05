@@ -106,12 +106,76 @@ class PostComment(APIView):
         serializers = PostSerializer(single_post)
         return Response(serializers.data)
 
+        
     def post(self, request, pk, format=None):
         serializers = CommentSerializer(data=request.data)
         if serializers.is_valid():
             serializers.save()
             return Response(serializers.data, status=status.HTTP_201_CREATED)
         return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+class StudentList(APIView):
+    def get_student(self, pk):
+        try:
+            return Student.objects.get(pk=pk)
+        except Student.DoesNotExist:
+            return Http404
+
+    def get(self, request, format=None):
+        #querying from the database(Student table)
+        students = Student.objects.all()
+        serializers = StudentSerializer(students, many=True)
+        #JSON RESPONSE
+        return Response(serializers.data)
+    
+    
+    # permission_classes = (IsAdminOrReadOnly,)
+    
+    def post(self, request, format=None):
+        serializers = StudentSerializer(data=request.data)
+        if serializers.is_valid():
+            serializers.save()
+            return Response(serializers.data, status=status.HTTP_201_CREATED)
+        return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    
+
+class SingleStudent(APIView):
+    # permission_classes = (IsAdminOrReadOnly,)
+    def get_student(self, pk):
+        try:
+            return Student.objects.get(pk=pk)
+        except Student.DoesNotExist:
+            return Http404
+
+    def get(self, request, pk, format=None):
+        single_post = self.get_student(pk)
+        serializers = StudentSerializer(single_post)
+        return Response(serializers.data)
+    
+    
+    def put(self, request, pk, format=None):
+        single_post = self.get_student(pk)
+        serializers = StudentSerializer(single_post, request.data)
+        if serializers.is_valid():
+            serializers.save()
+            return Response(serializers.data)
+        else:
+            return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    def delete(self, request, pk, format=None):
+        flag_post = self.get_student(pk)
+        flag_post.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+    
+    def post(self, request, pk,format=None):
+        serializers=StudentSerializer(data=request.data)
+        if serializers.is_valid():
+            serializers.save()
+            return Response(serializers.data, status=status.HTTP_201_CREATED)
+        return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    
 
     # def get(self, request, pk, format=None):
     #     pass
@@ -169,5 +233,21 @@ class deactivate_user(APIView):
    
 # Admin
 
+class Wishlist(APIView):
+    queryset = Wishlist.objects.all()
+    serializer= WishlistSerializer
+    # permission_classes = (IsAdminOrReadOnly,)
+
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
+
+    
+
+    def post(self, request, pk,format=None):
+        serializers=WishlistSerializer(data=request.data)
+        if serializers.is_valid():
+            serializers.save()
+            return Response(serializers.data,status=status.HTTP_201_CREATED)
+        return Response(serializers.errors,status=status.HTTP_400_BAD_REQUEST)
 class AddUser(APIView):
     pass

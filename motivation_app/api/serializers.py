@@ -121,3 +121,13 @@ class LikesSerializer(serializers.ModelSerializer):
     class Meta:
         model = Likes
         fields = '__all__'
+
+class WishlistSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Wishlist
+        fields = '__all__'
+
+class StudentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Student
+        fields = '__all__'
