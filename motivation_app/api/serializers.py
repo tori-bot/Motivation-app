@@ -89,3 +89,9 @@ class StudentSerializer(serializers.ModelSerializer):
     class Meta:
         model=Student
         fields = '__all__'
+
+class CommentSerializer(serializers.ModelSerializer):
+    user = UserSerializer(read_only=True)
+    class Meta:
+        model=Comment
+        fields = '__all__'

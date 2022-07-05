@@ -41,7 +41,7 @@ class Staff(models.Model):
     
     
 class Student(models.Model):
-    user=models.OneToOneField(User ,related_name='student', on_delete=models.CASCADE)
+    user=models.OneToOneField(User ,related_name='student',null=True, on_delete=models.CASCADE)
     reg_no=models.CharField(max_length=200, null=True)
     course=models.CharField(max_length=200,null=True)
     posts=models.ForeignKey('Post', null=True,blank=True ,on_delete=models.CASCADE)

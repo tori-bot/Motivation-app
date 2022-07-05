@@ -102,20 +102,20 @@ class StudentList(APIView):
             return Response(serializers.data, status=status.HTTP_201_CREATED)
         return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def put(self, request, pk, format=None):
-        student = self.get_student(pk)
-        serializers = StudentSerializer(student, request.data)
-        if serializers.is_valid():
-            serializers.save()
-            return Response(serializers.data)
-        else:
-            return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
+    # def put(self, request, pk, format=None):
+    #     student = self.get_student(pk)
+    #     serializers = StudentSerializer(student, request.data)
+    #     if serializers.is_valid():
+    #         serializers.save()
+    #         return Response(serializers.data)
+    #     else:
+    #         return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
     
 
-    def delete(self, request, pk, format=None):
-        flag_post = self.get_student(pk)
-        flag_post.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+    # def delete(self, request, pk, format=None):
+    #     flag_post = self.get_student(pk)
+    #     flag_post.delete()
+    #     return Response(status=status.HTTP_204_NO_CONTENT)
 
 class SingleStudent(APIView):
     # permission_classes = (IsAdminOrReadOnly,)
