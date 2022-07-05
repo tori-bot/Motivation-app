@@ -206,16 +206,20 @@ class LikesView(APIView):
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
-# class DeactivateUser(APIView):
-#     def get(self, request, *args, **kwargs):
-#         user=self.request.user
-#         user.delete()
-
-#         return Response({"result":"user delete"})
-
-
-class deactivate_user(APIView):
+class RegisteredUsers(APIView):
     pass
+
+class DeactivateUser(APIView):
+    # permission_classes = [permissions.IsAuthenticated]
+
+    def delete(self, request, *args, **kwargs):
+        user=self.request.user
+        user.delete()
+
+        return Response({"result":"user delete"})
+
+# class deactivate_user(APIView):
+#     pass
 #     def put(self, request, *args, **kwargs):
 #         serializers = UserSerializer(data=request.data)
 #         if serializers.is_active False:
