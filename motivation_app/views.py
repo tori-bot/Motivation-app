@@ -207,7 +207,11 @@ class LikesView(APIView):
 
 
 class RegisteredUsers(APIView):
-    pass
+    def get(self, request, format=None):
+        users = User.objects.all()
+        serializer = UserSerializer(users, many=True)
+        return Response(serializer.data)
+    
 
 class DeactivateUser(APIView):
     # permission_classes = [permissions.IsAuthenticated]
