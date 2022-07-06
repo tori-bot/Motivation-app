@@ -183,7 +183,9 @@ REST_FRAMEWORK = {
 AUTH_USER_MODEL = 'motivation_app.User'
 ACCOUNT_EMAIL_UNIQUE=True
 
-CORS_ORIGIN_ALLOW_ALL = False
-CORS_ORIGIN_WHITELIST = (
-    'http://localhost:8000',
+CORS_ALLOW_ALL_ORIGINS = (
+    True  # If this is used then `CORS_ALLOWED_ORIGINS` will not have any effect
 )
+CORS_ALLOW_CREDENTIALS = True
+
+CORS_ALLOWED_ORIGINS = []

@@ -9,6 +9,10 @@ from django.conf import settings
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
+from django.contrib.auth import get_user_model
+from django.shortcuts import get_object_or_404
+
+
 class User(AbstractUser):
     is_admin = models.BooleanField('Is admin', default=False)
     is_staff = models.BooleanField('Is staff', default=False)
@@ -127,9 +131,10 @@ class Post(models.Model):
         return self.description
 
 class Comment(models.Model):
-    comment= models.TextField(null=True, blank=True)
+    # comment= models.TextField(null=True, blank=True)
+    parent_comment= models.ForeignKey("self", null=True, blank=True,on_delete=models.CASCADE)
     date_posted=models.DateTimeField(auto_now_add=True)
-    child_comment=models.ManyToManyField('Comment', related_name='comment_child_comment', null=True)
+    child_comment=models.TextField(null=True)
     user_id=models.ForeignKey(User,on_delete=models.CASCADE, null=True )
     post_id=models.ForeignKey(Post, on_delete= models.CASCADE,null=True, blank=True)
     
