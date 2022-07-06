@@ -131,3 +131,8 @@ class StudentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Student
         fields = '__all__'
+        
+class UserProfileChangeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = '__all__'
