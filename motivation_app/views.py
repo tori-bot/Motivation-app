@@ -114,6 +114,27 @@ class PostComment(APIView):
             return Response(serializers.data, status=status.HTTP_201_CREATED)
         return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
     
+class PostChildComment(APIView):  
+    def get_single_comment(self, pk):
+            try:
+                return Comment.objects.get(pk=pk)
+            except Comment.DoesNotExist:
+                return Http404
+
+    def get(self, request, pk, format=None):
+        single_comment= self.get_single_comment(pk)
+        serializers = CommentSerializer(single_comment)
+        return Response(serializers.data)
+
+        
+    def post(self, request, pk, format=None):
+        serializers = ChildCommentSerializer(data=request.data)
+        if serializers.is_valid():
+            serializers.save()
+            return Response(serializers.data, status=status.HTTP_201_CREATED)
+        return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    
 class StudentList(APIView):
     def get_student(self, pk):
         try:
@@ -207,7 +228,11 @@ class LikesView(APIView):
 
 
 class RegisteredUsers(APIView):
-    pass
+    def get(self, request, format=None):
+        users = User.objects.all()
+        serializer = UserSerializer(users, many=True)
+        return Response(serializer.data)
+    
 
 class DeactivateUser(APIView):
     # permission_classes = [permissions.IsAuthenticated]

@@ -116,6 +116,12 @@ class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model=Comment
         fields = '__all__'
+        
+class ChildCommentSerializer(serializers.ModelSerializer):
+    user = UserSerializer(read_only=True)
+    class Meta:
+        model=ChildComment
+        fields = '__all__'
     
 class LikesSerializer(serializers.ModelSerializer):
     class Meta:
@@ -130,4 +136,9 @@ class WishlistSerializer(serializers.ModelSerializer):
 class StudentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Student
+        fields = '__all__'
+        
+class UserProfileChangeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
         fields = '__all__'
