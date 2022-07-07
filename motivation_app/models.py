@@ -48,7 +48,7 @@ class Student(models.Model):
     posts=models.ForeignKey('Post', null=True,blank=True ,on_delete=models.CASCADE)
     comments=models.ForeignKey('Comment', null=True,blank=True ,on_delete=models.CASCADE)
     categories=models.ForeignKey('Category', null=True,blank=True ,on_delete=models.CASCADE)
-    wishlist=models.ForeignKey('Wishlist',null=True,blank=True ,on_delete=models.CASCADE)
+    # wished_item=models.ForeignKey('Wishlist',null=True,blank=True ,on_delete=models.CASCADE)
 
     def save_student(self):
         self.save()
@@ -167,7 +167,7 @@ class Likes(models.Model):
 
 
 class Wishlist(models.Model):
-    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    student = models.ForeignKey(Student,on_delete=models.CASCADE,null=True)
     wished_item = models.ForeignKey(Post,on_delete=models.CASCADE)
     added_date = models.DateTimeField(auto_now_add=True)
     
@@ -181,7 +181,7 @@ class Wishlist(models.Model):
     def update_wish_item(self):
         self.update()
     
-    
+
 class Subscription(models.Model):
     email = models.EmailField(null=True)
     category_id=models.ForeignKey(Category, on_delete=models.CASCADE, null=True)
