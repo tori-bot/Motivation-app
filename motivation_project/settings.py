@@ -183,9 +183,9 @@ REST_FRAMEWORK = {
 AUTH_USER_MODEL = 'motivation_app.User'
 ACCOUNT_EMAIL_UNIQUE=True
 
-CORS_ALLOW_ALL_ORIGINS = (
-    True  # If this is used then `CORS_ALLOWED_ORIGINS` will not have any effect
-)
-CORS_ALLOW_CREDENTIALS = True
-
-CORS_ALLOWED_ORIGINS = []
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:4200/",
+    # "https://software-dev-motivation.herokuapp.com/",
+    # "http://localhost:8000",
+    "https://josephatngugi.github.io/Motivation-App-Frontend",
+]
