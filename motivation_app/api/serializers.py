@@ -116,6 +116,12 @@ class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model=Comment
         fields = '__all__'
+        
+class ChildCommentSerializer(serializers.ModelSerializer):
+    user = UserSerializer(read_only=True)
+    class Meta:
+        model=ChildComment
+        fields = '__all__'
     
 class LikesSerializer(serializers.ModelSerializer):
     class Meta:

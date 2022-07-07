@@ -131,10 +131,9 @@ class Post(models.Model):
         return self.description
 
 class Comment(models.Model):
-    # comment= models.TextField(null=True, blank=True)
-    parent_comment= models.ForeignKey("self", null=True, blank=True,on_delete=models.CASCADE)
+    comment= models.TextField(null=True, blank=True)
+    # parent_comment= models.ForeignKey("self", null=True, blank=True,on_delete=models.CASCADE)
     date_posted=models.DateTimeField(auto_now_add=True)
-    child_comment=models.TextField(null=True)
     user_id=models.ForeignKey(User,on_delete=models.CASCADE, null=True )
     post_id=models.ForeignKey(Post, on_delete= models.CASCADE,null=True, blank=True)
     
@@ -150,6 +149,30 @@ class Comment(models.Model):
         
     def __str__(self):
         return self.comment
+    
+    
+class ChildComment(models.Model):
+    user_id=models.ForeignKey(User,on_delete=models.CASCADE, null=True )
+    comment_id =models.ForeignKey(Comment, null=True, blank=True,on_delete=models.CASCADE)
+    child_comment=models.TextField(null=True)
+    date_commented=models.DateTimeField(auto_now_add=True, null=True)
+    
+    def save_comment(self):
+        self.save()
+
+    def delete_comment(self):
+        self.delete()
+        
+        
+    def update_comment(self):
+        self.update()
+        
+    def __str__(self):
+        return self.comment
+    
+    
+
+
 
 class Likes(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
