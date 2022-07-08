@@ -171,9 +171,6 @@ class ChildComment(models.Model):
         return self.comment
     
     
-
-
-
 class Likes(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     user_id= models.ForeignKey(User,on_delete=models.CASCADE)

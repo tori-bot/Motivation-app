@@ -30,11 +30,11 @@ CLOUDINARY_STORAGE = {
     'API_SECRET': config('API_SECRET')
 }
 
-# CLOUDINARY_STORAGE = {
-#     'CLOUD_NAME': "reuby",
-#     'API_KEY': '127562842443717',
-#     'API_SECRET': "zxr3TbjmRS2ZvPW9XT-sApQDEtA" 
-# }
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': "reuby",
+    'API_KEY': '127562842443717',
+    'API_SECRET': "zxr3TbjmRS2ZvPW9XT-sApQDEtA" 
+}
 
 # CLOUD_NAME="reuby", 
 # API_KEY= '127562842443717', 
@@ -188,5 +188,6 @@ ACCOUNT_EMAIL_UNIQUE=True
 #     'https://polite-fairy-12efa3.netlify.app'
 #     'https://josephatngugi.github.io/Motivation-App-Frontend',
 # ]
+
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
