@@ -10,7 +10,7 @@ schema_view = get_schema_view(
     openapi.Info(
         title="Software Development Students motivation app",
         default_version='v1',
-        description="Test description",
+        description="This is a platform where students can get authentic and verified information/inspiration/advice about the tech space.",
         terms_of_service="https://www.sds.com/policies/terms/",
         contact=openapi.Contact(email="contact@sds.local"),
         license=openapi.License(name="BSD License"),

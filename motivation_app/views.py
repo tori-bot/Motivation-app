@@ -209,11 +209,6 @@ class SingleStudent(APIView):
             return Response(serializers.data, status=status.HTTP_201_CREATED)
         return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    
-
-    # def get(self, request, pk, format=None):
-    #     pass
-
 
 class LikesView(APIView):
     def post(self, request, pk):
@@ -256,23 +251,7 @@ class DeactivateUser(APIView):
 
         return Response({"result":"user delete"})
 
-# class deactivate_user(APIView):
-#     pass
-#     def put(self, request, *args, **kwargs):
-#         serializers = UserSerializer(data=request.data)
-#         if serializers.is_active False:
-#             serializers.save()
-#             return Response(serializers.data)
-#         else:
-#             return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
-#         user = request.user
-#         data = {}
-#         user.is_active = False
-#         user.save()
-#         data["success"] = "User successfully deactivated!"
-#         # return redirect('index')
-
-   
+ 
 # Admin
 
 class Wishlist(APIView):
@@ -289,13 +268,6 @@ class Wishlist(APIView):
         except Post.DoesNotExist:
             return Http404
 
-
-    # queryset = Wishlist.objects.all()
-    # serializer= WishlistSerializer
-    # # permission_classes = (IsAdminOrReadOnly,)
-
-    # def perform_create(self, serializer):
-    #     serializer.save(owner=self.request.user)
 
     def get(self, request,pk, format=None):
         items=WishlistModel.objects.filter(student_id=pk)
