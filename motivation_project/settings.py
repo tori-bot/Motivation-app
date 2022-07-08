@@ -24,11 +24,11 @@ ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
 
 # CLOUDINARY_URL='cloudinary://641878439427965:0JG9bP_8I9ankDR7lKqjjGzROFg@dnsz8shfx'
 
-# CLOUDINARY_STORAGE = {
-#     'CLOUD_NAME': config('CLOUD_NAME'),
-#     'API_KEY': config('API_KEY'),
-#     'API_SECRET': config('API_SECRET')
-# }
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': config('CLOUD_NAME'),
+    'API_KEY': config('API_KEY'),
+    'API_SECRET': config('API_SECRET')
+}
 
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': "reuby",
@@ -183,9 +183,11 @@ REST_FRAMEWORK = {
 AUTH_USER_MODEL = 'motivation_app.User'
 ACCOUNT_EMAIL_UNIQUE=True
 
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:4200/",
-    # "https://software-dev-motivation.herokuapp.com/",
-    # "http://localhost:8000",
-    "https://josephatngugi.github.io/Motivation-App-Frontend",
-]
+# CORS_ALLOWED_ORIGINS = [
+#     'http://localhost:4200',
+#     'https://polite-fairy-12efa3.netlify.app'
+#     'https://josephatngugi.github.io/Motivation-App-Frontend',
+# ]
+
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_CREDENTIALS = True
