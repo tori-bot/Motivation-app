@@ -188,5 +188,6 @@ ACCOUNT_EMAIL_UNIQUE=True
 #     'https://polite-fairy-12efa3.netlify.app'
 #     'https://josephatngugi.github.io/Motivation-App-Frontend',
 # ]
+
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
