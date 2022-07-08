@@ -24,17 +24,17 @@ ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
 
 # CLOUDINARY_URL='cloudinary://641878439427965:0JG9bP_8I9ankDR7lKqjjGzROFg@dnsz8shfx'
 
-# CLOUDINARY_STORAGE = {
-#     'CLOUD_NAME': config('CLOUD_NAME'),
-#     'API_KEY': config('API_KEY'),
-#     'API_SECRET': config('API_SECRET')
-# }
-
 CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': "reuby",
-    'API_KEY': '127562842443717',
-    'API_SECRET': "zxr3TbjmRS2ZvPW9XT-sApQDEtA" 
+    'CLOUD_NAME': config('CLOUD_NAME'),
+    'API_KEY': config('API_KEY'),
+    'API_SECRET': config('API_SECRET')
 }
+
+# CLOUDINARY_STORAGE = {
+#     'CLOUD_NAME': "reuby",
+#     'API_KEY': '127562842443717',
+#     'API_SECRET': "zxr3TbjmRS2ZvPW9XT-sApQDEtA" 
+# }
 
 # CLOUD_NAME="reuby", 
 # API_KEY= '127562842443717', 

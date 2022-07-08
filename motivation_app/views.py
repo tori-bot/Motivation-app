@@ -1,4 +1,5 @@
 from cgitb import lookup
+from django.db import IntegrityError
 from django.http import Http404
 from django.shortcuts import render
 from .api.serializers import *
@@ -8,7 +9,8 @@ from rest_framework import status
 from rest_framework.views import APIView
 from django.db.models import Q
 from django.shortcuts import get_object_or_404
-
+from django.core.exceptions import ObjectDoesNotExist
+from .models import Wishlist as WishlistModel
 # Application views.
 
 
@@ -263,20 +265,74 @@ class DeactivateUser(APIView):
 # Admin
 
 class Wishlist(APIView):
-    queryset = Wishlist.objects.all()
-    serializer= WishlistSerializer
-    # permission_classes = (IsAdminOrReadOnly,)
 
-    def perform_create(self, serializer):
-        serializer.save(owner=self.request.user)
+    def get_student(self, pk):
+        try:
+            return Student.objects.get(pk=pk)
+        except Student.DoesNotExist:
+            return Http404
 
+    def get_single_post(self, pk):
+        try:
+            return Post.objects.get(pk=pk)
+        except Post.DoesNotExist:
+            return Http404
+
+
+    # queryset = Wishlist.objects.all()
+    # serializer= WishlistSerializer
+    # # permission_classes = (IsAdminOrReadOnly,)
+
+    # def perform_create(self, serializer):
+    #     serializer.save(owner=self.request.user)
+
+    def get(self, request,pk, format=None):
+        items=WishlistModel.objects.filter(student_id=pk)
+        serializers = WishlistSerializer(items,many=True)
+        return Response(serializers.data)
+
+    def post(self, request,pk,format=None):
+        
+        serializers=WishlistSerializer(data=request.data)
+        if serializers.is_valid():
+            serializers.save()
+            return Response(serializers.data, status=status.HTTP_201_CREATED)
+        return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class SingleWishlist(APIView):
+    def get_single_wishlist(self, pk):
+        try:
+            return WishlistModel.objects.get(pk=pk)
+        except ObjectDoesNotExist:
+            return Http404
+
+    def get(self, request, pk, format=None):
+        user = self.get_single_wishlist(pk)
+        serializers = WishlistSerializer(user)
+        return Response(serializers.data)
+
+    def put(self, request, pk, format=None):
+        single_post = self.get_single_wishlist(pk)
+        serializers = WishlistSerializer(single_post, request.data)
+        if serializers.is_valid():
+            serializers.save()
+            return Response(serializers.data)
+        else:
+            return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
     
-
+    def delete(self, request, pk, format=None):
+        flag_post = self.get_single_wishlist(pk)
+        flag_post.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+    
     def post(self, request, pk,format=None):
         serializers=WishlistSerializer(data=request.data)
         if serializers.is_valid():
             serializers.save()
-            return Response(serializers.data,status=status.HTTP_201_CREATED)
-        return Response(serializers.errors,status=status.HTTP_400_BAD_REQUEST)
+            return Response(serializers.data, status=status.HTTP_201_CREATED)
+        return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
 class AddUser(APIView):
     pass
