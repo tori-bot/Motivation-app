@@ -30,16 +30,6 @@ CLOUDINARY_STORAGE = {
     'API_SECRET': config('API_SECRET')
 }
 
-# CLOUDINARY_STORAGE = {
-#     'CLOUD_NAME': "reuby",
-#     'API_KEY': '127562842443717',
-#     'API_SECRET': "zxr3TbjmRS2ZvPW9XT-sApQDEtA" 
-# }
-
-# CLOUD_NAME="reuby", 
-# API_KEY= '127562842443717', 
-# API_SECRET="zxr3TbjmRS2ZvPW9XT-sApQDEtA" 
-
 # Application definition
 
 INSTALLED_APPS = [
