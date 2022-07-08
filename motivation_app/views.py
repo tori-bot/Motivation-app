@@ -136,7 +136,18 @@ class PostChildComment(APIView):
             return Response(serializers.data, status=status.HTTP_201_CREATED)
         return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
     
+class commentsList(APIView):
+    def get(self, request, format=None):
+        comments = Comment.objects.all()
+        serializer = CommentSerializer(comments, many=True)
+        return Response(serializer.data)
     
+class LikesList(APIView):
+    def get(self, request, format=None):
+        likes = Likes.objects.all()
+        serializer = CommentSerializer(likes, many=True)
+        return Response(serializer.data)
+
 class StudentList(APIView):
     def get_student(self, pk):
         try:

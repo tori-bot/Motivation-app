@@ -60,7 +60,11 @@ urlpatterns = [
     path('admin/post/<int:pk>/', views.SinglePostList.as_view(), name='singlepost'),
     path('admin/add_users/', views.AddUser.as_view(), name='singlepost'),
     path('admin/deactivate/', views.DeactivateUser.as_view(), name='deactivate'),
-    path('all_users/', views.RegisteredUsers.as_view(), name='all_users')
+    
+    #general paths
+    path('all_users/', views.RegisteredUsers.as_view(), name='all_users'),
+    path('all_comments/', views.commentsList.as_view(), name='comments'),
+    path('all_likes/', views.LikesList.as_view(), name='likes'),
     
     
 ]
