@@ -211,7 +211,7 @@ class Wishlist(models.Model):
 class Subscription(models.Model):
     email = models.EmailField(null=True)
     category_id=models.ForeignKey(Category, on_delete=models.CASCADE, null=True)
-    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    student_id = models.ForeignKey(Student, on_delete=models.CASCADE,null=True)
     
     def save_subscription(self):
         self.save()

@@ -330,6 +330,12 @@ class AddUser(APIView):
     pass
 
 class Subscriptions(APIView):
+    def get_single_sub(self, pk):
+        try:
+            return WishlistModel.objects.get(pk=pk)
+        except ObjectDoesNotExist:
+            return Http404
+
     def get(self, request,pk, format=None):
             items=Subscription.objects.filter(student_id=pk)
             serializers = SubscriptionSerializer(items,many=True)
@@ -341,3 +347,17 @@ class Subscriptions(APIView):
             serializers.save()
             return Response(serializers.data, status=status.HTTP_201_CREATED)
         return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def put(self, request, pk, format=None):
+        single_post = self.get_single_sub(pk)
+        serializers = WishlistSerializer(single_post, request.data)
+        if serializers.is_valid():
+            serializers.save()
+            return Response(serializers.data)
+        else:
+            return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    def delete(self, request, pk, format=None):
+        flag_post = self.get_single_sub(pk)
+        flag_post.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
