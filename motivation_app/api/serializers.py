@@ -107,8 +107,7 @@ class CategorySerializer(serializers.ModelSerializer):
         
 class PostSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
-    content_image = serializers.ImageField(required=False)
-
+    # content_image = serializers.ImageField(required=False)
 
     class Meta:
         model=Post
