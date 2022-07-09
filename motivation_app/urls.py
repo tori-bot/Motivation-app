@@ -34,7 +34,7 @@ urlpatterns = [
     path('signup/student/', StudentSignUpView.as_view()),
     path('api/profile/', views.profile.as_view(),name='profile'),
     path('api/update_profile/', views.UpdateProfile.as_view(), name='profile_update'),
-    path('staff/categories/',views.categoryCreation, name="category"),
+    path('staff/categories/',views.categoryCreation.as_view(), name="category"),
     path('staff/post/', views.PostList.as_view(), name='staffpostendpoint'),
     path('staff/post/<int:pk>/', views.SinglePostList.as_view(), name='singlepost'),
     path('staff/post/<int:pk>/comment/', views.PostComment.as_view(), name='comment'),
