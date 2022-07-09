@@ -328,3 +328,16 @@ class SingleWishlist(APIView):
 
 class AddUser(APIView):
     pass
+
+class Subscriptions(APIView):
+    def get(self, request,pk, format=None):
+            items=Subscription.objects.filter(student_id=pk)
+            serializers = SubscriptionSerializer(items,many=True)
+            return Response(serializers.data)
+
+    def post(self, request,pk,format=None):
+        serializers=SubscriptionSerializer(data=request.data)
+        if serializers.is_valid():
+            serializers.save()
+            return Response(serializers.data, status=status.HTTP_201_CREATED)
+        return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
