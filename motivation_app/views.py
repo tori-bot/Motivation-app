@@ -11,10 +11,13 @@ from django.db.models import Q
 from django.shortcuts import get_object_or_404
 from django.core.exceptions import ObjectDoesNotExist
 from .models import Wishlist as WishlistModel
+from rest_framework.parsers import MultiPartParser, FormParser
+
 # Application views.
 
 
 class profile(APIView):
+    parser_classes = (MultiPartParser, FormParser)
     def get(request, format=None):
         all_profiles = Profile.objects.all()
         serializers = ProfileSerializer(all_profiles, many=True)
@@ -23,6 +26,7 @@ class profile(APIView):
 
 class UpdateProfile(APIView):
     serializer_class = ProfileSerializer
+    # parser_classes = (MultiPartParser, FormParser)
     lookup_field = 'email'
     profiles = Profile.objects.all()
 
@@ -55,6 +59,24 @@ class categoryCreation(APIView):
             data["success"] = "Post category created successfully!"
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    # def post(request):
+    #     user = request.user
+    #     user = Category(user=user)
+
+    #     serializer = CategorySerializer(user, data=request.data)
+    #     data = {}
+    #     if serializer.is_valid():
+    #         serializer.save()
+    #         data["success"] = "Post category created successfully!"
+    #         return Response(serializer.data, status=status.HTTP_201_CREATED)
+    #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    def post(self, request, format=None):
+        serializers = CategorySerializer(data=request.data)
+        if serializers.is_valid():
+            serializers.save()
+            return Response(serializers.data, status=status.HTTP_201_CREATED)
+        return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class PostList(APIView):
@@ -76,6 +98,7 @@ class PostList(APIView):
 
 
 class SinglePostList(APIView):
+    parser_classes = (MultiPartParser, FormParser)
     # permission_classes = (IsAdminOrReadOnly,)
     def get_single_post(self, pk):
         try:
@@ -106,6 +129,7 @@ class SinglePostList(APIView):
 
 
 class PostComment(APIView):
+    # parser_classes = (MultiPartParser, FormParser)
     def get_single_post(self, pk):
         try:
             return Post.objects.get(pk=pk)
@@ -125,7 +149,8 @@ class PostComment(APIView):
             return Response(serializers.data, status=status.HTTP_201_CREATED)
         return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
     
-class PostChildComment(APIView):  
+class PostChildComment(APIView): 
+    parser_classes = (MultiPartParser, FormParser) 
     def get_single_comment(self, pk):
             try:
                 return Comment.objects.get(pk=pk)

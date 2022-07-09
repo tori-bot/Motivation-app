@@ -116,6 +116,13 @@ class Post(models.Model):
     comments = models.ManyToManyField('Comment', null=True,blank=True)
     
     
+    def content_image(self):
+        if self.content_image:
+            return u'<img src"%s" width="50" height="50"/>'%self.content_image.url
+        else:
+            return'(image)'
+    
+    
     
     def save_post(self):
         self.save()
