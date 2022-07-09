@@ -44,7 +44,7 @@ class categoryCreation(APIView):
         return Response(serializers.data)
     
     
-    def post(request):
+    def post(self,request):
         user = request.user
         user = Category(user=user)
 

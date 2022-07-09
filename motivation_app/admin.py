@@ -1,3 +1,4 @@
+from ast import Sub
 from django.contrib import admin
 from .models import *
 
@@ -12,3 +13,4 @@ admin.site.register(Category)
 admin.site.register(Likes)
 admin.site.register(Comment)
 admin.site.register(Wishlist)
+admin.site.register(Subscription)
