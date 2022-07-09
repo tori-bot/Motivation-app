@@ -1,5 +1,3 @@
-from cgitb import lookup
-from django.db import IntegrityError
 from django.http import Http404
 from django.shortcuts import render
 from .api.serializers import *
@@ -12,6 +10,7 @@ from django.shortcuts import get_object_or_404
 from django.core.exceptions import ObjectDoesNotExist
 from .models import Wishlist as WishlistModel
 from rest_framework.parsers import MultiPartParser, FormParser
+from rest_framework.parsers import FileUploadParser
 
 # Application views.
 
@@ -25,6 +24,7 @@ class profile(APIView):
 
 
 class UpdateProfile(APIView):
+    parser_class = (FileUploadParser,)
     serializer_class = ProfileSerializer
     # parser_classes = (MultiPartParser, FormParser)
     lookup_field = 'email'
@@ -69,6 +69,7 @@ class categoryCreation(APIView):
 
 
 class PostList(APIView):
+    parser_class = (FileUploadParser,)
     def get(self, request, format=None):
         # querying from the database(Posts table)
         posts = Post.objects.all()
@@ -87,7 +88,7 @@ class PostList(APIView):
 
 
 class SinglePostList(APIView):
-    parser_classes = (MultiPartParser, FormParser)
+    # parser_classes = (MultiPartParser, FormParser)
     # permission_classes = (IsAdminOrReadOnly,)
     def get_single_post(self, pk):
         try:
@@ -118,7 +119,6 @@ class SinglePostList(APIView):
 
 
 class PostComment(APIView):
-    # parser_classes = (MultiPartParser, FormParser)
     def get_single_post(self, pk):
         try:
             return Post.objects.get(pk=pk)
@@ -127,7 +127,7 @@ class PostComment(APIView):
 
     def get(self, request, pk, format=None):
         single_post = self.get_single_post(pk)
-        serializers = PostSerializer(single_post)
+        serializers = CommentSerializer(single_post)
         return Response(serializers.data)
 
         
@@ -139,7 +139,6 @@ class PostComment(APIView):
         return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
     
 class PostChildComment(APIView): 
-    parser_classes = (MultiPartParser, FormParser) 
     def get_single_comment(self, pk):
             try:
                 return Comment.objects.get(pk=pk)
