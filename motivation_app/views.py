@@ -332,7 +332,7 @@ class AddUser(APIView):
 class Subscriptions(APIView):
     def get_single_sub(self, pk):
         try:
-            return WishlistModel.objects.get(pk=pk)
+            return Subscription.objects.get(pk=pk)
         except ObjectDoesNotExist:
             return Http404
 
@@ -350,7 +350,7 @@ class Subscriptions(APIView):
 
     def put(self, request, pk, format=None):
         single_post = self.get_single_sub(pk)
-        serializers = WishlistSerializer(single_post, request.data)
+        serializers = SubscriptionSerializer(single_post, request.data)
         if serializers.is_valid():
             serializers.save()
             return Response(serializers.data)

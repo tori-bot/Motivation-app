@@ -53,7 +53,7 @@ class Student(models.Model):
     comments=models.ForeignKey('Comment', null=True,blank=True ,on_delete=models.CASCADE)
     categories=models.ForeignKey('Category', null=True,blank=True ,on_delete=models.CASCADE)
     wished_item=models.ForeignKey('Wishlist',null=True,blank=True ,on_delete=models.CASCADE)
-    subscriptions=models.ForeignKey('Subscriptions',null=True,on_delete=models.CASCADE)
+    subscriptions=models.ForeignKey('Subscription',null=True,on_delete=models.CASCADE)
 
     def save_student(self):
         self.save()

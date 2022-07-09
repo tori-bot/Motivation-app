@@ -52,6 +52,7 @@ urlpatterns = [
     path('student/wishlist/<int:pk>/', views.SingleWishlist.as_view(), name='studentwishlistendpoint'),
     path('student/post/<int:pk>/like/',views.LikesView.as_view(),name = 'post_likes'),
     path('student/post/<int:pk>/comment/', views.PostComment.as_view(), name='comment'),
+    path('student/post/comment/<int:pk>/comment/', views.PostChildComment.as_view(), name='comment'),
     path('student/<int:pk>/subscription/', views.Subscriptions.as_view(), name='studentsubsendpoint'),
     
     #Admin Urls
