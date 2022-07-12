@@ -179,6 +179,11 @@ class WishlistSerializer(serializers.ModelSerializer):
         model = Wishlist
         fields = '__all__'
 
+class SubscriptionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Subscription
+        fields = '__all__'
+
 class StudentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Student
@@ -188,9 +193,18 @@ class UserProfileChangeSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = '__all__'
+
         
 class GetUserSerializer(serializers.ModelSerializer):
     # role = RoleSerializer(read_only=True)
     class Meta:
         model = User
         fields = ["id", "username", "email", "first_name", "last_name", "role"]
+
+
+# class ImageUploadSerializer(serializers.ModelSerializer):
+#     user = UserSerializer(read_only=True)
+#     class Meta:
+#         model=ImageUpload
+#         fields = '__all__'
+

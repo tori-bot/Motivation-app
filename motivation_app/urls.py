@@ -35,10 +35,15 @@ urlpatterns = [
     path('signup/',UserSignUp.as_view()),
     path('api/profile/', views.profile.as_view(),name='profile'),
     path('api/update_profile/', views.UpdateProfile.as_view(), name='profile_update'),
+
     path('staff/create_categories/',views.categoryCreation.as_view(), name="category"),
     path('staff/post/', views.PostList.as_view(), name='staffpostendpoint'),
     path('staff/post/<int:pk>', views.SinglePostList.as_view(), name='singlepost'),
     path('comment-staff/post/<int:pk>', views.PostComment.as_view(), name='comment'),
+    
+    path('staff/post/', views.PostList.as_view(), name='staffpostendpoint'),
+    # path('staff/<int:pk>/imageupload/', views.ImageUpload.as_view(), name='imageupload'),
+    
     path('staff/post/comment/<int:pk>/comment/', views.PostChildComment.as_view(), name='comment'),
     path('posts/<int:pk>/like/',views.LikesView.as_view(),name = 'post_likes'),
     
@@ -49,10 +54,13 @@ urlpatterns = [
     path('student/<int:pk>/', views.SingleStudent.as_view(), name='singlestudent'),
     path('student/post/', views.PostList.as_view(), name='studentpostendpoint'),
     path('student/post/<int:pk>/', views.SinglePostList.as_view(), name='singlepost'),
+    # path('student/<int:pk>/imageupload/', views.ImageUpload.as_view(), name='imageupload'),
     path('student/<int:pk>/wishlist/', views.Wishlist.as_view(), name='studentwishlistendpoint'),
     path('student/wishlist/<int:pk>/', views.SingleWishlist.as_view(), name='studentwishlistendpoint'),
     path('student/post/<int:pk>/like/',views.LikesView.as_view(),name = 'post_likes'),
     path('student/post/<int:pk>/comment/', views.PostComment.as_view(), name='comment'),
+    path('student/post/comment/<int:pk>/comment/', views.PostChildComment.as_view(), name='comment'),
+    path('student/<int:pk>/subscription/', views.Subscriptions.as_view(), name='studentsubsendpoint'),
     
     
     

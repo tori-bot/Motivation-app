@@ -94,6 +94,7 @@ class Student(models.Model):
     comments=models.ForeignKey('Comment', null=True,blank=True ,on_delete=models.CASCADE)
     categories=models.ForeignKey('Category', null=True,blank=True ,on_delete=models.CASCADE)
     wished_item=models.ForeignKey('Wishlist',null=True,blank=True ,on_delete=models.CASCADE)
+    subscriptions=models.ForeignKey('Subscription',null=True,blank=True,on_delete=models.CASCADE)
 
     def save_student(self):
         self.save()
@@ -261,7 +262,7 @@ class Wishlist(models.Model):
 class Subscription(models.Model):
     email = models.EmailField(null=True)
     category_id=models.ForeignKey(Category, on_delete=models.CASCADE, null=True)
-    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    student_id = models.ForeignKey(Student, on_delete=models.CASCADE,null=True)
     
     def save_subscription(self):
         self.save()
@@ -277,12 +278,13 @@ class Subscription(models.Model):
     def __str__(self):
         return self.email
     
-# class Addedusers(models.Model):
-#     firstname= models.CharField(max_length=50, null=True)
-#     lastname= models.CharField(max_length=50, null=True)
-#     username= models.CharField(max_length=50, null=True)
-#     role = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
-    
+
+# class ImageUpload(models.Model):
+#     file =models.ImageField(null=True,blank=True,upload_to='images_uploaded')
+
+#     def __str__(self):
+#         return self.file
+
 
 #Models
 # User
