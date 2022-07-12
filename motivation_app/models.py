@@ -107,8 +107,8 @@ class Category(models.Model):
 class Post(models.Model):
     content_name=models.CharField(max_length=100,null=True,blank=True)
     content_image=models.ImageField(null=True,blank=True,upload_to='images_uploaded')
-    video = models.FileField(null=True,blank=True,upload_to='videos_uploaded',
-    validators=[FileExtensionValidator(allowed_extensions=['MOV','avi','mp4','webm','mkv'])])
+    # video = models.FileField(null=True,blank=True,upload_to='videos_uploaded',
+    # validators=[FileExtensionValidator(allowed_extensions=['MOV','avi','mp4','webm','mkv'])])
     user = models.ForeignKey(User, on_delete=models.CASCADE,null=True,blank=True)
     description=models.TextField()
     date_posted=models.DateTimeField(auto_now_add=True)
@@ -235,7 +235,12 @@ class Subscription(models.Model):
         return self.email
     
 
-    
+class ImageUpload(models.Model):
+    file =models.ImageField(null=True,blank=True,upload_to='images_uploaded')
+
+    def __str__(self):
+        return self.file
+
 
 #Models
 # User
