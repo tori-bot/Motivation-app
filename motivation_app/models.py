@@ -13,13 +13,47 @@ from django.contrib.auth import get_user_model
 from django.shortcuts import get_object_or_404
 
 
-class User(AbstractUser):
-    is_admin = models.BooleanField('Is admin', default=False)
-    is_staff = models.BooleanField('Is staff', default=False)
-    is_student = models.BooleanField('Is student', default=False)
+class Role(models.Model):
     
+    
+    name = models.CharField(
+        max_length=30, null=True
+    )
+    
+    def insert_roles(self):
+        roles = ["ADMIN", "STAFF", "STUDENT"]
+        for role in roles:
+            new_role = Role(name=role)
+            new_role.save()
+
     def __str__(self):
-        return self.username
+        return self.name
+
+
+
+class User(AbstractUser):
+    ADMIN=1
+    STAFF=2
+    STUDENT=3
+    
+    ROLES = (
+        (ADMIN, "Admin"),
+        (STAFF, "Staff"),
+        (STUDENT, "Student"),
+    )
+    
+    role = models.PositiveSmallIntegerField(choices=ROLES,null=True)
+
+    def __str__(self):
+        return f"{self.username} - {self.get_role_display()}"
+
+    # is_admin = models.BooleanField('Is admin', default=False)
+    # is_staff = models.BooleanField('Is staff', default=False)
+    # is_student = models.BooleanField('Is student', default=False)
+    
+    # def __str__(self):
+    #     return self.username
+    
     
     
 #using signals to create authentication token
@@ -27,6 +61,13 @@ class User(AbstractUser):
 def create_auth_token(sender, instance=None, created=False, **kwargs):
     if created:
         Token.objects.create(user=instance)
+        
+        
+ROLES = (
+    ('Admin', 'Admin'),
+    ('Staff', 'Staff'),
+    ('Student', 'Student'),
+)
         
 
 class Admin(models.Model):
@@ -67,13 +108,16 @@ class Student(models.Model):
     def __str__(self):
         return self.user.username
     
-    
+
+# def upload_path(instance, filename):
+#     return '/'.join(['profile_pics', str(instance.title), filename])
+
 class Profile(models.Model):
     user=models.OneToOneField(User,on_delete=models.CASCADE,related_name='profile')
     firstname=models.CharField(max_length=100,blank=True,null=True)
     lastname=models.CharField(max_length=100,blank=True,null=True)
     email=models.EmailField(max_length=100,blank=True,null=True)
-    profile_pic=models.ImageField(upload_to='images_uploaded', null=True)
+    profile_pic=models.ImageField(upload_to='upload_path', null=True)
     bio=models.TextField(blank=True,null=True)
     
     # def __str__(self):
@@ -103,16 +147,22 @@ class Category(models.Model):
     def __str__(self):
         return self.type
 
+
+# def upload_path(instance, filename):
+#     return '/'.join(['content_images', str(instance.content_name), filename])
+# def upload_to(instance, filename):
+#     return 'images/{filename}'.format(filename=filename)
+
 class Post(models.Model):
     content_name=models.CharField(max_length=100,null=True,blank=True)
-    content_image=models.ImageField(null=True,blank=True,upload_to='images_uploaded')
+    content_image=models.FileField(null=True,blank=True,upload_to='images_uploaded')
     video = models.FileField(null=True,blank=True,upload_to='videos_uploaded',
     validators=[FileExtensionValidator(allowed_extensions=['MOV','avi','mp4','webm','mkv'])])
     user = models.ForeignKey(User, on_delete=models.CASCADE,null=True,blank=True)
     description=models.TextField()
     date_posted=models.DateTimeField(auto_now_add=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True,blank=True)
-    comments = models.ManyToManyField('Comment', null=True,blank=True)
+    comments = models.ForeignKey('Comment',on_delete=models.CASCADE, null=True,blank=True)
     
     
     
@@ -128,14 +178,14 @@ class Post(models.Model):
     
     
     def __str__(self):
-        return self.description
+        return self.content_name
 
 class Comment(models.Model):
+    post_id=models.ForeignKey(Post, on_delete= models.CASCADE,null=True, blank=True)
     comment= models.TextField(null=True, blank=True)
-    # parent_comment= models.ForeignKey("self", null=True, blank=True,on_delete=models.CASCADE)
     date_posted=models.DateTimeField(auto_now_add=True)
     user_id=models.ForeignKey(User,on_delete=models.CASCADE, null=True )
-    post_id=models.ForeignKey(Post, on_delete= models.CASCADE,null=True, blank=True)
+    
     
     def save_comment(self):
         self.save()
@@ -171,6 +221,7 @@ class ChildComment(models.Model):
         return self.comment
     
     
+
 class Likes(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     user_id= models.ForeignKey(User,on_delete=models.CASCADE)

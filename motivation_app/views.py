@@ -1,5 +1,3 @@
-from cgitb import lookup
-from django.db import IntegrityError
 from django.http import Http404
 from django.shortcuts import render
 from .api.serializers import *
@@ -11,10 +9,14 @@ from django.db.models import Q
 from django.shortcuts import get_object_or_404
 from django.core.exceptions import ObjectDoesNotExist
 from .models import Wishlist as WishlistModel
+from rest_framework.parsers import MultiPartParser, FormParser
+from rest_framework.parsers import FileUploadParser
+
 # Application views.
 
 
 class profile(APIView):
+    parser_classes = (MultiPartParser, FormParser)
     def get(request, format=None):
         all_profiles = Profile.objects.all()
         serializers = ProfileSerializer(all_profiles, many=True)
@@ -22,7 +24,9 @@ class profile(APIView):
 
 
 class UpdateProfile(APIView):
+    parser_class = (FileUploadParser,)
     serializer_class = ProfileSerializer
+    # parser_classes = (MultiPartParser, FormParser)
     lookup_field = 'email'
     profiles = Profile.objects.all()
 
@@ -44,20 +48,28 @@ class categoryCreation(APIView):
         return Response(serializers.data)
     
     
-    def post(request):
-        user = request.user
-        user = Category(user=user)
+    # def post(request):
+    #     user = request.user
+    #     user = Category(user=user)
 
-        serializer = CategorySerializer(user, data=request.data)
-        data = {}
-        if serializer.is_valid():
-            serializer.save()
-            data["success"] = "Post category created successfully!"
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    #     serializer = CategorySerializer(user, data=request.data)
+    #     data = {}
+    #     if serializer.is_valid():
+    #         serializer.save()
+    #         data["success"] = "Post category created successfully!"
+    #         return Response(serializer.data, status=status.HTTP_201_CREATED)
+    #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    def post(self, request, format=None):
+        serializers = CategorySerializer(data=request.data)
+        if serializers.is_valid():
+            serializers.save()
+            return Response(serializers.data, status=status.HTTP_201_CREATED)
+        return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class PostList(APIView):
+    parser_class = (FileUploadParser,)
     def get(self, request, format=None):
         # querying from the database(Posts table)
         posts = Post.objects.all()
@@ -76,6 +88,7 @@ class PostList(APIView):
 
 
 class SinglePostList(APIView):
+    # parser_classes = (MultiPartParser, FormParser)
     # permission_classes = (IsAdminOrReadOnly,)
     def get_single_post(self, pk):
         try:
@@ -114,7 +127,7 @@ class PostComment(APIView):
 
     def get(self, request, pk, format=None):
         single_post = self.get_single_post(pk)
-        serializers = PostSerializer(single_post)
+        serializers = CommentSerializer(single_post)
         return Response(serializers.data)
 
         
@@ -125,7 +138,7 @@ class PostComment(APIView):
             return Response(serializers.data, status=status.HTTP_201_CREATED)
         return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
     
-class PostChildComment(APIView):  
+class PostChildComment(APIView): 
     def get_single_comment(self, pk):
             try:
                 return Comment.objects.get(pk=pk)
