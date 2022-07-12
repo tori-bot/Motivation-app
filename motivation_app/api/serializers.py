@@ -149,3 +149,9 @@ class UserProfileChangeSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = '__all__'
+
+class IMageUploadSerializer(serializers.ModelSerializer):
+    user = UserSerializer(read_only=True)
+    class Meta:
+        model=ImageUpload
+        fields = '__all__'
