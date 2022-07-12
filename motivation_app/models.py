@@ -106,7 +106,7 @@ class Category(models.Model):
 
 class Post(models.Model):
     content_name=models.CharField(max_length=100,null=True,blank=True)
-    content_image=models.ImageField(null=True,blank=True,upload_to='images_uploaded')
+    content_image=models.ForeignKey('ImageUpload',on_delete=models.CASCADE, null=True,blank=True)
     # video = models.FileField(null=True,blank=True,upload_to='videos_uploaded',
     # validators=[FileExtensionValidator(allowed_extensions=['MOV','avi','mp4','webm','mkv'])])
     user = models.ForeignKey(User, on_delete=models.CASCADE,null=True,blank=True)
