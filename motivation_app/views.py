@@ -386,10 +386,11 @@ class Subscriptions(APIView):
         flag_post.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
-class ImageUpload(APIView):
-    def post(self, request, pk, format=None):
-        serializers = ImageUploadSerializer(data=request.data)
-        if serializers.is_valid():
-            serializers.save()
-            return Response(serializers.data, status=status.HTTP_201_CREATED)
-        return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
+# class ImageUpload(APIView):
+#     parser_classes = (MultiPartParser, FormParser,FileUploadParser)
+#     def post(self, request, pk, format=None):
+#         serializers = ImageUploadSerializer(data=request.data)
+#         if serializers.is_valid():
+#             serializers.save()
+#             return Response(serializers.data, status=status.HTTP_201_CREATED)
+#         return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)

@@ -150,8 +150,8 @@ class UserProfileChangeSerializer(serializers.ModelSerializer):
         model = User
         fields = '__all__'
 
-class ImageUploadSerializer(serializers.ModelSerializer):
-    user = UserSerializer(read_only=True)
-    class Meta:
-        model=ImageUpload
-        fields = '__all__'
+# class ImageUploadSerializer(serializers.ModelSerializer):
+#     user = UserSerializer(read_only=True)
+#     class Meta:
+#         model=ImageUpload
+#         fields = '__all__'
