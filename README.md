@@ -15,19 +15,24 @@
 + [Authors Info](#authors-info)
 
 ## Description
-This is a platform where students can get authentic and verified information/inspiration/advice about the tech space. The information will be in the form of videos, audio, or articles/blogs.
+This is a platform where students can get authentic and verified information/inspiration/advice about the tech space. The information will be in the form of images, text and articles/blogs.
 
 
 [Go Back to the top](#software-development-students-motivation-app)
 
+## Admin Login Credentials 🔑
 
+```json
+{
+  "username": "",
+  "password": ""
+}
+```
 ## User Stories
 
 Admin Can :-
 
-* Add a user
 * Flag or remove posted content that violates the rules and guidelines.
-* Approve content that can be published publicly on the platform.
 * Deactivate a user.
 * Create categories for content
 
@@ -35,7 +40,6 @@ Staff can :-
 
 * Create a profile
 * Create categories for content - DevOPs,Fullstack,Front-End
-* Approve content that can be published publicly on the platform.
 * Flag published content that violates the rules and guidelines.
 * Post content
 * Edit content details
@@ -47,53 +51,20 @@ Student can :-
 * Customize my interests at my pleasure.
 * Post content 
 * Read/view/listen to content 
-* Comment on a post or start a thread on a comment -  much like how Reddit works.
+* Comment on a post or start a thread on a comment.
 * Add content to my wishlist
-* Share/recommend videos
-* Get customized recommendations depending on my preference indicated in my profile.
 * Get notifications whenever new content is posted to my subscribed categories.
 * View other users’ remarks, comments, comments on comments/all chained comments.
-
-
-
-[Go Back to the top](#software-development-students-motivation-app)
-
-Software Development Students motivation app Registration
-
-![Registration](./app/static/images/register.png)
-
-Software Development Students motivation app Login
-
-![Login](./app/static/images/login.png)
-
-
-Software Development Students motivation app Home Module
-
-![Software Development Students motivation app](./app/static/images/home.png)
-
-Why Software Development Students motivation app
-
-![Software Development Students motivation app ](./app/static/images/why.png)
-
-
-Our services as Software Development Students motivation app
-
-![Software Development Students motivation app](./app/static/images/service.png)
-
-
-
 
 
 ## Behaviour Driven Development
 | Behaviour | Input | Output |
 | ---------------- | --------------- | ------------------ |
-| Application starts | **On page load** | Login page for user to login |
-| Registration| **Registration page** | The registration page has a register form for new users  to register to the application and are redirected to login.Depending on the user type after login users are directed to different views including the  |
-| View Details | **View Details click** | `Views Details`button upon clicking this button an can be able to view more details about the machinery and even find an option to update or remove the machinery, and also see the orders that have been made  |
-| View Description | **View Description button** | Upon click of `View description button` the user can be able to see the more details about the machinery or she wants to hire, e.g the pay-rate, a small description|
-| Profile Icon | **Profile Icon click** | User gets option to view profile, update profile and logout.On view profile user can view and also edit his or her own profile.The logout button ends the users session|
-| Forms | **Form filling** | User gets to fill in various forms, and depending on various tasks the form are meant for, upon submission the act is done e.g hiring form which is meant for user to fill in the details and submit the order.|
+| Application starts | **On page load** | Home page and a `signup button` for user to login |
+| Registration| **Registration page** | The registration page has a register form for new users  to register to the application and are redirected to login.Depending on the user type after login users are directed to different views including the .A user can register as a `staff` or a `student`.The Administrator is just allowed to login.A `student user` uses an email with `@student` while for `staff users` their email format includes `@staff` |
+| View Details | **View Details click** | `Views Details`button upon clicking this button an can be able to view more details about posts |
 
+| Forms | **Form filling** | User gets to fill in various forms, and depending on various tasks the form are meant for, upon submission the act is done e.g making a post, updating the post details|
 
 ## Installation Requirements
 
@@ -172,9 +143,11 @@ python manage.py makemigrations
 
 [MIT License](LICENSE)
 
-## Live Site
+## Live Sites
 
-#### /
+#### https://josephatngugi.github.io/Motivation-App-Frontend
+
+#### https://software-dev-motivation.herokuapp.com/ 
 
 
 
